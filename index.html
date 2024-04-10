@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Interactive comments section</title>
+  </head>
+  <body>
+    <!-- Pull dynamic content from the data.json file -->
+
+    <section class="main">
+      <div class="container">
+        <div class="post">
+          <div class="votes">
+            <div class="plus"><i class="fa-solid fa-plus"></i></div>
+            <div class="counter">12</div>
+            <div class="minus"><i class="fa-solid fa-minus"></i></div>
+          </div>
+          <div class="content">
+            <div class="content-headers">
+              <div class="content-header-infos">
+                <div class="profil-img">
+                  <img src="./images/avatars/image-amyrobson.png" alt="" />
+                </div>
+                <div class="profil-name">amyrobson</div>
+                <div class="post-date">1 month ago</div>
+              </div>
+              <div class="content-header-buttons">
+                <button class="reply-btn">
+                  <i class="fa-solid fa-reply"></i>Reply
+                </button>
+              </div>
+            </div>
+            <div class="content-body">
+              <div class="message">
+                <p>
+                  Impressive! Though it seems the drag feature could be
+                  improved. But overall it looks incredible. You've nailed the
+                  design and the responsiveness at various breakpoints works
+                  really well.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="post">
+          <div class="votes">
+            <div class="plus"><i class="fa-solid fa-plus"></i></div>
+            <div class="counter">5</div>
+            <div class="minus"><i class="fa-solid fa-minus"></i></div>
+          </div>
+          <div class="content">
+            <div class="content-headers">
+              <div class="content-header-infos">
+                <div class="profil-img">
+                  <img src="./images/avatars/image-maxblagun.png" alt="" />
+                </div>
+                <div class="profil-name">maxblagun</div>
+                <div class="post-date">2 weeks ago</div>
+              </div>
+              <div class="content-header-buttons">
+                <button class="reply-btn">
+                  <i class="fa-solid fa-reply"></i>Reply
+                </button>
+              </div>
+            </div>
+            <div class="content-body">
+              <div class="message">
+                <p>
+                  Woah, your project looks awesome! How long have you been
+                  coding for? I'm still new, but think I want to dive into React
+                  as well soon. Perhaps you can give me an insight on where I
+                  can learn React? Thanks!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reply">
+          <div class="votes">
+            <div class="plus"><i class="fa-solid fa-plus"></i></div>
+            <div class="counter">4</div>
+            <div class="minus"><i class="fa-solid fa-minus"></i></div>
+          </div>
+          <div class="content">
+            <div class="content-headers">
+              <div class="content-header-infos">
+                <div class="profil-img">
+                  <img src="./images/avatars/image-ramsesmiron.png" alt="" />
+                </div>
+                <div class="profil-name">Ramsesmiron</div>
+                <div class="post-date">1 week ago</div>
+              </div>
+              <div class="content-header-buttons">
+                <button class="reply-btn">
+                  <i class="fa-solid fa-reply"></i>Reply
+                </button>
+              </div>
+            </div>
+            <div class="content-body">
+              <div class="message">
+                <p>
+                  <span class="tagged-replied-user">@taggedUser</span>
+                  If you're still new, I'd recommend focusing on the
+                  fundamentals of HTML, CSS, and JS before considering React.
+                  It's very tempting to jump ahead but lay a solid foundation
+                  first.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="reply">
+          <div class="votes">
+            <div class="plus"><i class="fa-solid fa-plus"></i></div>
+            <div class="counter">2</div>
+            <div class="minus"><i class="fa-solid fa-minus"></i></div>
+          </div>
+          <div class="content">
+            <div class="content-headers">
+              <div class="content-header-infos">
+                <div class="profil-img">
+                  <img src="./images/avatars/image-juliusomo.png" alt="" />
+                </div>
+                <div class="profil-name">juliusomo</div>
+                <div class="current-user-tag">you</div>
+                <div class="post-date">2 days ago</div>
+              </div>
+              <div class="content-header-buttons">
+                <button class="delete-btn">
+                  <i class="fa-solid fa-trash"></i>Delete
+                </button>
+                <button class="edit-btn">
+                  <i class="fas fa-edit"></i>Edit
+                </button>
+              </div>
+            </div>
+            <div class="content-body">
+              <div class="message">
+                <p>
+                  <span class="tagged-replied-user">@taggedUser</span>
+                  Impressive! Though it seems the drag feature could be
+                  improved. But overall it looks incredible. You've nailed the
+                  design and the responsiveness at various breakpoints works
+                  really well.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="post">
+          <form action="index.html">
+            <img src="./images/avatars/image-juliusomo.png" alt="" />
+            <input
+              class="comment-text"
+              type="text"
+              placeholder="Add a comment..."
+            />
+            <button id="submitButton" class="submitButton">SEND</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>

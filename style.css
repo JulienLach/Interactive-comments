@@ -1,0 +1,190 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+img {
+  height: 35px;
+}
+
+/* MAIN SECTION */
+.main {
+  display: flex;
+  align-items: center;
+  background-color: #fff5e9;
+}
+
+.container {
+  max-width: 700px;
+  margin: 2em auto;
+}
+
+/* POST DIV */
+
+.post {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+  margin-bottom: 1.3em;
+  padding: 1.5em;
+  gap: 2em;
+  border-radius: 0.5em;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+/* POST CONTENT */
+
+.votes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em 0.5em;
+  background-color: rgb(238, 238, 238);
+  border-radius: 0.5em;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+
+.content-headers {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content-header-infos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1em;
+}
+
+.content-header-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.profil-name {
+  font-weight: bold;
+}
+
+.post-date {
+  color: #777;
+}
+
+.message {
+  color: #777;
+}
+
+/* VOTE BUTTONS */
+.counter {
+  font-weight: bold;
+  color: orangered;
+}
+
+.votes i {
+  cursor: pointer;
+}
+
+/* BUTTONS */
+.reply-btn,
+.delete-btn,
+.edit-btn {
+  border: none;
+  background-color: transparent;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1em;
+  color: orangered;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  transition: 0.1s;
+}
+
+.reply-btn:hover,
+.delete-btn:hover,
+.edit-btn:hover {
+  background-color: #ffcbbb;
+}
+
+.submitButton {
+  background-color: orangered;
+  border: none;
+  border-radius: 0.3em;
+  padding: 1em 2em;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.submitButton:hover {
+  background-color: #fd8641;
+}
+
+/* ICONS */
+
+.fa-reply,
+.fa-trash,
+.fa-edit {
+  color: orangered;
+}
+
+/* REPLY */
+.reply {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  padding: 1.5em;
+  gap: 2em;
+  border-radius: 0.5em;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+/* COMMENT FORM */
+
+form {
+  display: flex;
+  flex-direction: row;
+  gap: 3em;
+  justify-content: center;
+  margin: auto;
+  width: 100%;
+}
+
+.comment-text {
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: 0.4em;
+  padding: 1em 1em;
+}
+
+/* CURRENT USER */
+.current-user-tag {
+  background-color: orangered;
+  color: #fff;
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+}
+
+/* TAGGER REPLY USER */
+.tagged-replied-user {
+  font-weight: bold;
+  color: orangered;
+}
