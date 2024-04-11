@@ -16,11 +16,16 @@ img {
 
 /* MAIN SECTION */
 .main {
-  display: flex;
+  /* display: flex; */
   align-items: center;
 }
 
 .container {
+  max-width: 700px;
+  margin: 2em auto;
+}
+
+.container-form {
   max-width: 700px;
   margin: 2em auto;
 }
@@ -55,6 +60,7 @@ img {
   display: flex;
   flex-direction: column;
   gap: 0.7em;
+  line-height: 1.4em;
 }
 
 .content-headers {
@@ -192,7 +198,7 @@ img {
 form {
   display: flex;
   flex-direction: row;
-  gap: 3em;
+  gap: 2em;
   justify-content: center;
   margin: auto;
   width: 100%;

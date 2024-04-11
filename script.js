@@ -164,9 +164,51 @@ deleteReply();
 fetch("./data.json")
   .then((reponse) => reponse.json())
   .then((data) => {
-    // afficher les données
-    const comments = data.comments;
-    const replies = data.replies;
-    console.log(comments);
-    console.log(replies);
+    // afficher les données dans la console
+    console.log(data);
+
+    // afficher les données dans le DOM
+    const container = document.querySelector(".container");
+
+    // pour chaque commentaire dans le fichier JSON
+    data.comments.forEach((comment) => {
+      //créer une div post
+      const postDiv = document.createElement("div");
+      postDiv.classList.add("post");
+
+      // Remplir la div "post" avec les données du commentaire
+      postDiv.innerHTML = `
+        <div class="votes">
+          <div class="plus"><i class="fa-solid fa-plus"></i></div>
+          <div class="counter">${comment.score}</div>
+          <div class="minus"><i class="fa-solid fa-minus"></i></div>
+        </div>
+        <div class="content">
+          <div class="content-headers">
+            <div class="content-header-infos">
+              <div class="profil-img">
+                <img src="${comment.user.image.png}" alt="" />
+              </div>
+              <div class="profil-name">${comment.user.username}</div>
+              <div class="post-date">${comment.createdAt}</div>
+            </div>
+            <div class="content-header-buttons">
+              <button class="reply-btn">
+                <i class="fa-solid fa-reply"></i>Reply
+              </button>
+            </div>
+          </div>
+          <div class="content-body">
+            <div class="message">
+              <p>${comment.content}</p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Ajouter la div "post" à la div "container"
+      container.appendChild(postDiv);
+
+      // afficher les réponses
+    });
   });
