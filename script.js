@@ -35,8 +35,8 @@ function createComment() {
   sendButton.addEventListener("click", (event) => {
     event.preventDefault();
     console.log("Commentaire posté!");
-    // récupérer le texte du commentaire du champ de texte
-    let commentaire = {
+    // récupérer le texte du commentaire du champ de texte et le stocker dand un objet
+    let comment = {
       user: {
         username: "juliusomo",
         image: {
@@ -44,10 +44,34 @@ function createComment() {
         },
       },
       content: commentText.value,
-      createdAt: new Date().toLocaleString(),
+      createdAt: new Date().toLocaleDateString(),
       replies: [],
+      score: 0,
     };
-    console.log(commentaire);
+    console.log(comment);
+    // ajouter le commentaire au fichier JSON
+    fetch("./data.json", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(comment),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then((data) => {
+        console.log(data);
+        displayComments(); // Rappler la fonction pour afficher les commentaires mis à jour
+      })
+      .catch((error) => {
+        console.log(
+          "There was a problem with the fetch operation: " + error.message
+        );
+      });
   });
 }
 
@@ -325,3 +349,56 @@ fetch("./data.json")
     editReply();
     deleteReply();
   });
+
+function displayComments() {
+  fetch("./data.json")
+    .then((reponse) => reponse.json())
+    .then((data) => {
+      // afficher les données dans la console
+      console.log(data);
+
+      // afficher les données dans le DOM
+      const container = document.querySelector(".container");
+      container.innerHTML = ""; // Clear the container
+
+      // pour chaque commentaire dans le fichier JSON
+      data.comments.forEach((comment) => {
+        //créer une div post
+        const postDiv = document.createElement("div");
+        postDiv.classList.add("post");
+
+        // Remplir la div "post" avec les données du commentaire
+        postDiv.innerHTML = `
+          <div class="votes">
+            <div class="plus"><i class="fa-solid fa-plus"></i></div>
+            <div class="counter">${comment.score}</div>
+            <div class="minus"><i class="fa-solid fa-minus"></i></div>
+          </div>
+          <div class="content">
+            <div class="content-headers">
+              <div class="content-header-infos">
+                <div class="profil-img">
+                  <img src="${comment.user.image.png}" alt="" />
+                </div>
+                <div class="profil-name">${comment.user.username}</div>
+                <div class="post-date">${comment.createdAt}</div>
+              </div>
+              <div class="content-header-buttons">
+                <button class="reply-btn">
+                  <i class="fa-solid fa-reply"></i>Reply
+                </button>
+              </div>
+            </div>
+            <div class="content-body">
+              <div class="message">
+                <p>${comment.content}</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Ajouter la div "post" à la div "container"
+        container.appendChild(postDiv);
+      });
+    });
+}
