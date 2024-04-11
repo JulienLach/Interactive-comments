@@ -1,4 +1,4 @@
-let counters = document.querySelectorAll(".counter");
+// let counters = document.querySelectorAll(".counter");
 const plusButtons = document.querySelectorAll(".plus");
 const minusButtons = document.querySelectorAll(".minus");
 const replyButtons = document.querySelectorAll(".reply-btn");
@@ -7,6 +7,8 @@ const deleteButtons = document.querySelectorAll(".delete-btn");
 
 // VOTES //
 function increaseVotes() {
+  const plusButtons = document.querySelectorAll(".plus");
+  const counters = document.querySelectorAll(".counter");
   plusButtons.forEach((button, index) => {
     plusButtons[index].addEventListener("click", () => {
       counters[index].innerText = parseInt(counters[index].innerText) + 1;
@@ -15,6 +17,8 @@ function increaseVotes() {
 }
 
 function decreaseVotes() {
+  const minusButtons = document.querySelectorAll(".minus");
+  const counters = document.querySelectorAll(".counter");
   minusButtons.forEach((button, index) => {
     minusButtons[index].addEventListener("click", () => {
       counters[index].innerText = parseInt(counters[index].innerText) - 1;
@@ -93,6 +97,8 @@ replyToReply();
 
 // EDIT FUNCTION //
 function editReply() {
+  const editButtons = document.querySelectorAll(".edit-btn");
+
   editButtons.forEach((button) => {
     button.addEventListener("click", () => {
       // empêcher de cliquer à nouveau sur le bouton reply
@@ -125,6 +131,7 @@ editReply();
 
 // DELETE FUNCTION CREER UN MODAL AVEC VALIDER OU ANNULER //
 function deleteReply() {
+  const deleteButtons = document.querySelectorAll(".delete-btn");
   deleteButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const dialog = document.createElement("dialog");
@@ -220,8 +227,45 @@ fetch("./data.json")
         const replyDiv = document.createElement("div");
         replyDiv.classList.add("reply");
 
-        // Remplir la div "reply" avec les données de la réponse
-        replyDiv.innerHTML = `
+        if (
+          data.currentUser.username === "juliusomo" &&
+          reply.user.username === "juliusomo"
+        ) {
+          replyDiv.innerHTML = `
+          <div class="votes">
+            <div class="plus"><i class="fa-solid fa-plus"></i></div>
+            <div class="counter">${reply.score}</div>
+            <div class="minus"><i class="fa-solid fa-minus"></i></div>
+          </div>
+          <div class="content">
+            <div class="content-headers">
+              <div class="content-header-infos">
+                <div class="profil-img">
+                  <img src="${reply.user.image.png}" alt="" />
+                </div>
+                <div class="profil-name">${reply.user.username}</div>
+                <div class="current-user-tag">You</div>
+                <div class="post-date">${reply.createdAt}</div>
+              </div>
+              <div class="content-header-buttons">
+                <button class="delete-btn">
+                  <i class="fa-solid fa-trash"></i>Delete
+                </button>
+                <button class="edit-btn">
+                  <i class="fas fa-edit"></i>Edit
+                </button>
+              </div>
+            </div>
+            <div class="content-body">
+              <div class="message">
+                <p><span class="tagged-replied-user">@${reply.replyingTo}</span> ${reply.content}</p>
+              </div>
+            </div>
+          </div>
+        `;
+        } else {
+          // Remplir la div "reply" avec les données de la réponse
+          replyDiv.innerHTML = `
           <div class="votes">
             <div class="plus"><i class="fa-solid fa-plus"></i></div>
             <div class="counter">${reply.score}</div>
@@ -248,14 +292,19 @@ fetch("./data.json")
               </div>
             </div>
           </div>
-        `;
+          `;
+        }
 
         // Ajouter la div "reply" à la div "post"
         postDiv.insertAdjacentElement("afterend", replyDiv);
       });
 
       // Appeler les fonctions dans le fetch pour que les événements soient ajoutés aux éléments créés
-      replyToPost();
-      replyToReply();
     });
+    replyToPost();
+    replyToReply();
+    increaseVotes();
+    decreaseVotes();
+    editReply();
+    deleteReply();
   });
