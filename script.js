@@ -35,6 +35,19 @@ function createComment() {
   sendButton.addEventListener("click", (event) => {
     event.preventDefault();
     console.log("Commentaire posté!");
+    // récupérer le texte du commentaire du champ de texte
+    let commentaire = {
+      user: {
+        username: "juliusomo",
+        image: {
+          png: "./images/avatars/image-juliusomo.png",
+        },
+      },
+      content: commentText.value,
+      createdAt: new Date().toLocaleString(),
+      replies: [],
+    };
+    console.log(commentaire);
   });
 }
 
