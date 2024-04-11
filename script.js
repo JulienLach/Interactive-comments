@@ -42,11 +42,11 @@ function replyToPost() {
       replyDiv.innerHTML = `<div class="post">
       <form action="index.html">
         <img src="./images/avatars/image-juliusomo.png" alt="" />
-        <input
+        <textarea
           class="comment-text"
-          type="text"
-          placeholder="Add a comment..." value="@taggedUser "
-        />
+          rows="4"
+          placeholder="Add a comment..."
+        >@taggedUser </textarea>
         <button id="submitButton" class="submitButton">REPLY</button>
       </form>
     </div>
@@ -71,11 +71,11 @@ function replyToReply() {
       replyDiv.innerHTML = `<div class="reply">
       <form action="index.html">
         <img src="./images/avatars/image-juliusomo.png" alt="" />
-        <input
+        <textarea
           class="comment-text"
-          type="text"
-          placeholder="Add a comment..." value="@taggedUser "
-        />
+          rows="4"
+          placeholder="Add a comment..."
+        >@taggedUser </textarea>
         <button id="submitButton" class="submitButton">REPLY</button>
       </form>
     </div>
@@ -104,11 +104,11 @@ function editReply() {
       replyDiv.innerHTML = `<div class="reply">
       <form action="index.html">
         <img src="./images/avatars/image-juliusomo.png" alt="" />
-        <input
+        <textarea
           class="comment-text"
-          type="text"
-          placeholder="Add a comment..." value="@taggedUser Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well. "
-        />
+          rows="4"
+          placeholder="Add a comment..."
+        >@taggedUser Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.</textarea>
         <button id="submitButton" class="submitButton">UPDATE</button>
       </form>
     </div>
@@ -121,7 +121,44 @@ function editReply() {
 editReply();
 
 // DELETE FUNCTION CREER UN MODAL AVEC VALIDER OU ANNULER //
-function deleteReply() {}
+function deleteReply() {
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const dialog = document.createElement("dialog");
+      dialog.innerHTML = `
+        <div class="modal-content">
+          <div class="modal-header">
+          <h2>Supprimer le commentaire</h2>
+          </div>
+          <div class="modal-body">
+          <p>Êtes-vous sûr de vouloir supprimer ce commentaire ? Impossible de revenir en arrière après la suppression</p>
+          </div>
+          <div class="modal-buttons">
+          <button class="cancel-remove-btn">ANNULER</button>
+          <button class="remove-comment-btn">VALIDER</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(dialog);
+
+      // Ouvrir le dialogue
+      dialog.showModal();
+
+      // Fermer le dialogue lorsque le bouton "CANCEL" est cliqué
+      dialog.querySelector(".cancel-btn").addEventListener("click", () => {
+        dialog.close();
+      });
+
+      // Supprimer le dialogue lorsque le bouton "DELETE" est cliqué
+      dialog.querySelector(".delete-btn").addEventListener("click", () => {
+        // Ici, vous pouvez ajouter le code pour supprimer la réponse
+        dialog.remove();
+      });
+    });
+  });
+}
+
+deleteReply();
 
 // LIRE LES DONNEES DU FICHIER JSON ET LES INTEGRER DANS LE DOM avec la méthode fetch
 fetch("./data.json")

@@ -102,6 +102,7 @@ img {
 .reply-btn,
 .delete-btn,
 .edit-btn {
+  height: fit-content;
   border: none;
   background-color: transparent;
   padding: 0.5em 1em;
@@ -123,6 +124,7 @@ img {
 }
 
 .submitButton {
+  height: fit-content;
   background-color: orangered;
   border: none;
   border-radius: 0.3em;
@@ -136,6 +138,31 @@ img {
 
 .submitButton:hover {
   background-color: #fd8641;
+}
+
+/* MODAL BUTTONS */
+.cancel-remove-btn {
+  background-color: #7e7c7c;
+  border: none;
+  border-radius: 0.3em;
+  padding: 0.5em 2.2em;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.remove-comment-btn {
+  background-color: orangered;
+  border: none;
+  border-radius: 0.3em;
+  padding: 0.5em 2.2em;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  transition: 0.1s;
 }
 
 /* ICONS */
@@ -190,4 +217,37 @@ form {
 .tagged-replied-user {
   font-weight: bold;
   color: orangered;
+}
+
+/* MODAL */
+.modal-body {
+  color: #777;
+  line-height: 1.4em;
+}
+
+.modal-buttons {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+/* DELETE MODAL */
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  max-width: 400px;
+  min-width: 300px;
+  overflow: auto;
+  background-color: #000;
+  background-color: #fff;
+  padding: 2em;
+  gap: 1em;
+  border-radius: 0.4em;
 }
