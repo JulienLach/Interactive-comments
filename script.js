@@ -28,6 +28,7 @@ decreaseVotes();
 // REPLY FUNCTIONS //
 // au clic du boutton reply append une div en dessous de la div parente du boutton
 function replyToPost() {
+  const replyButtons = document.querySelectorAll(".reply-btn");
   replyButtons.forEach((button) => {
     button.addEventListener("click", () => {
       // empêcher de cliquer à nouveau sur le bouton reply
@@ -57,6 +58,8 @@ function replyToPost() {
 }
 
 function replyToReply() {
+  const replyButtons = document.querySelectorAll(".reply-btn");
+
   replyButtons.forEach((button) => {
     button.addEventListener("click", () => {
       // empêcher de cliquer à nouveau sur le bouton reply
@@ -209,6 +212,50 @@ fetch("./data.json")
       // Ajouter la div "post" à la div "container"
       container.appendChild(postDiv);
 
-      // afficher les réponses
+      // pour chaque réponse dans le commentaire actuel on est dans la boucle de commentaire
+      // donc on utilise le (comment) actuel
+      // Pour chaque réponse
+      comment.replies.forEach((reply) => {
+        // Créer une div "reply"
+        const replyDiv = document.createElement("div");
+        replyDiv.classList.add("reply");
+
+        // Remplir la div "reply" avec les données de la réponse
+        replyDiv.innerHTML = `
+          <div class="votes">
+            <div class="plus"><i class="fa-solid fa-plus"></i></div>
+            <div class="counter">${reply.score}</div>
+            <div class="minus"><i class="fa-solid fa-minus"></i></div>
+          </div>
+          <div class="content">
+            <div class="content-headers">
+              <div class="content-header-infos">
+                <div class="profil-img">
+                  <img src="${reply.user.image.png}" alt="" />
+                </div>
+                <div class="profil-name">${reply.user.username}</div>
+                <div class="post-date">${reply.createdAt}</div>
+              </div>
+              <div class="content-header-buttons">
+                <button class="reply-btn">
+                  <i class="fa-solid fa-reply"></i>Reply
+                </button>
+              </div>
+            </div>
+            <div class="content-body">
+              <div class="message">
+                <p><span class="tagged-replied-user">@${reply.replyingTo}</span> ${reply.content}</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Ajouter la div "reply" à la div "post"
+        postDiv.insertAdjacentElement("afterend", replyDiv);
+      });
+
+      // Appeler les fonctions dans le fetch pour que les événements soient ajoutés aux éléments créés
+      replyToPost();
+      replyToReply();
     });
   });
