@@ -129,7 +129,7 @@ img {
   background-color: #ffcbbb;
 }
 
-.submitButton {
+.sendButton {
   height: fit-content;
   background-color: orangered;
   border: none;
@@ -142,7 +142,7 @@ img {
   transition: 0.1s;
 }
 
-.submitButton:hover {
+.sendButton:hover {
   background-color: #fd8641;
 }
 

@@ -26,8 +26,19 @@ function decreaseVotes() {
   });
 }
 
-increaseVotes();
-decreaseVotes();
+// CREATE POST FUNCTIONS //
+function createComment() {
+  const sendButton = document.querySelector(".sendButton");
+  const commentText = document.querySelector(".comment-text");
+  const form = document.querySelector("form");
+
+  sendButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    console.log("Commentaire posté!");
+  });
+}
+
+createComment();
 
 // REPLY FUNCTIONS //
 // au clic du boutton reply append une div en dessous de la div parente du boutton
@@ -52,7 +63,7 @@ function replyToPost() {
           rows="4"
           placeholder="Add a comment..."
         >@taggedUser </textarea>
-        <button id="submitButton" class="submitButton">REPLY</button>
+        <button id="submitButton" class="sendButton">REPLY</button>
       </form>
     </div>
   </div>`;
@@ -83,7 +94,7 @@ function replyToReply() {
           rows="4"
           placeholder="Add a comment..."
         >@taggedUser </textarea>
-        <button id="submitButton" class="submitButton">REPLY</button>
+        <button id="submitButton" class="sendButton">REPLY</button>
       </form>
     </div>
   </div>`;
@@ -91,9 +102,6 @@ function replyToReply() {
     });
   });
 }
-
-replyToPost();
-replyToReply();
 
 // EDIT FUNCTION //
 function editReply() {
@@ -118,7 +126,7 @@ function editReply() {
           rows="4"
           placeholder="Add a comment..."
         >@taggedUser Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.</textarea>
-        <button id="submitButton" class="submitButton">UPDATE</button>
+        <button id="submitButton" class="sendButton">UPDATE</button>
       </form>
     </div>
   </div>`;
@@ -126,8 +134,6 @@ function editReply() {
     });
   });
 }
-
-editReply();
 
 // DELETE FUNCTION CREER UN MODAL AVEC VALIDER OU ANNULER //
 function deleteReply() {
@@ -167,8 +173,6 @@ function deleteReply() {
     });
   });
 }
-
-deleteReply();
 
 // LIRE LES DONNEES DU FICHIER JSON ET LES INTEGRER DANS LE DOM avec la méthode fetch
 fetch("./data.json")
