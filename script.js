@@ -40,15 +40,19 @@ function replyToPost() {
 
       const postDiv = button.closest(".post");
       const replyDiv = document.createElement("div");
+      const userToReply = button
+        .closest(".content")
+        .querySelector(".profil-name").innerText;
 
       replyDiv.innerHTML = `<div class="post">
-      <form action="index.html">
+      <form action="/api/replyToPost" method="POST">
         <img src="./images/avatars/image-juliusomo.png" alt="" />
         <textarea
+          name="content"
           class="comment-text"
           rows="4"
           placeholder="Add a comment..."
-        >@taggedUser </textarea>
+        >@${userToReply} </textarea>
         <button id="submitButton" class="sendButton">REPLY</button>
       </form>
     </div>

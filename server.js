@@ -35,6 +35,7 @@ app.post("/api", (req, res) => {
       },
       username: "juliusomo",
     },
+    replies: [],
   };
   fs.readFile("./data.json", (err, data) => {
     if (err) {
@@ -54,4 +55,22 @@ app.post("/api", (req, res) => {
       }
     });
   });
+});
+
+// Route pour traiter le le reply à un post et tester avec postman
+app.post("/api/replyToPost", (req, res) => {
+  const replyText = req.body.content;
+  const reply = {
+    content: replyText,
+    createdAt: "Aujourd'hui",
+    score: 0,
+    replyingTo: req.body.replyingTo,
+    user: {
+      image: {
+        png: "./images/avatars/image-juliusomo.png",
+        webp: "./images/avatars/image-juliusomo.webp",
+      },
+      username: "juliusomo",
+    },
+  };
 });
