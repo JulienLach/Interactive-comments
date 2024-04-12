@@ -3,10 +3,14 @@ const path = require("path");
 const fs = require("fs");
 const app = express();
 
-// Serve static files from the current directory
-app.use(express.static(__dirname));
+// Déplacez cette ligne avant les routes
+app.use(express.static(__dirname)); // Serve static files from the current directory
+
 // Pour analyser les corps de requête JSON
 app.use(express.json());
+
+// Middleware pour analyser les corps de requête URL encodés
+app.use(express.urlencoded({ extended: true }));
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
@@ -19,7 +23,19 @@ app.get("/", (req, res) => {
 
 // Route pour traiter la requete post et tester avec postman
 app.post("/api", (req, res) => {
-  const comment = req.body;
+  const commentText = req.body.content;
+  const comment = {
+    content: commentText,
+    createdAt: "Aujourd'hui",
+    score: 0,
+    user: {
+      image: {
+        png: "./images/avatars/image-juliusomo.png",
+        webp: "./images/avatars/image-juliusomo.webp",
+      },
+      username: "juliusomo",
+    },
+  };
   fs.readFile("./data.json", (err, data) => {
     if (err) {
       console.error(err);
@@ -27,14 +43,15 @@ app.post("/api", (req, res) => {
       return;
     }
     let jsonData = JSON.parse(data);
-    jsonData.comments.push(comment); // Ajoute le commentaire au tableau 'comments'
+    jsonData.comments.push(comment);
     fs.writeFile("./data.json", JSON.stringify(jsonData, null, 2), (err) => {
       if (err) {
         console.error(err);
         res.status(500).send("Erreur lors de l'écriture dans le fichier");
         return;
+      } else {
+        res.redirect("/");
       }
-      res.status(200).send("Commentaire ajouté");
     });
   });
 });

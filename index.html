@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -21,9 +21,10 @@
 
       <div class="container-form">
         <div class="post">
-          <form class="form" action="" method="">
-            <img src="./images/avatars/image-juliusomo.png" alt="" />
+          <form class="form" action="/api" method="POST">
+            <img src="/images/avatars/image-juliusomo.png" alt="" />
             <textarea
+              name="content"
               class="comment-text"
               rows="4"
               placeholder="Add a comment..."
@@ -34,6 +35,6 @@
       </div>
     </section>
 
-    <script src="script.js"></script>
+    <script src="/script.js"></script>
   </body>
 </html>
