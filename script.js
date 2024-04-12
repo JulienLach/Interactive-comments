@@ -53,6 +53,7 @@ function replyToPost() {
           rows="4"
           placeholder="Add a comment..."
         >@${userToReply} </textarea>
+        <input type="hidden" name="replyingTo" value="${userToReply}" />
         <button id="submitButton" class="sendButton">REPLY</button>
       </form>
     </div>

@@ -19,7 +19,47 @@
         },
         "username": "amyrobson"
       },
-      "replies": []
+      "replies": [
+        {
+          "content": "@amyrobson aaaa",
+          "createdAt": "Aujourd'hui",
+          "score": 0,
+          "replyingTo": "amyrobson",
+          "user": {
+            "image": {
+              "png": "./images/avatars/image-juliusomo.png",
+              "webp": "./images/avatars/image-juliusomo.webp"
+            },
+            "username": "juliusomo"
+          }
+        },
+        {
+          "content": "@amyrobson BBBBB",
+          "createdAt": "Aujourd'hui",
+          "score": 0,
+          "replyingTo": "amyrobson",
+          "user": {
+            "image": {
+              "png": "./images/avatars/image-juliusomo.png",
+              "webp": "./images/avatars/image-juliusomo.webp"
+            },
+            "username": "juliusomo"
+          }
+        },
+        {
+          "content": "@amyrobson CCCC",
+          "createdAt": "Aujourd'hui",
+          "score": 0,
+          "replyingTo": "amyrobson",
+          "user": {
+            "image": {
+              "png": "./images/avatars/image-juliusomo.png",
+              "webp": "./images/avatars/image-juliusomo.webp"
+            },
+            "username": "juliusomo"
+          }
+        }
+      ]
     },
     {
       "id": 2,
@@ -61,11 +101,37 @@
             },
             "username": "juliusomo"
           }
+        },
+        {
+          "content": "@maxblagun AAAAAAAAAAAAA",
+          "createdAt": "Aujourd'hui",
+          "score": 0,
+          "replyingTo": "maxblagun",
+          "user": {
+            "image": {
+              "png": "./images/avatars/image-juliusomo.png",
+              "webp": "./images/avatars/image-juliusomo.webp"
+            },
+            "username": "juliusomo"
+          }
         }
       ]
     },
     {
       "content": "Ceci est un test de commentaire un peu plus long pour pousser la div jusqu'au bout test\r\n\r\n",
+      "createdAt": "Aujourd'hui",
+      "score": 0,
+      "user": {
+        "image": {
+          "png": "./images/avatars/image-juliusomo.png",
+          "webp": "./images/avatars/image-juliusomo.webp"
+        },
+        "username": "juliusomo"
+      },
+      "replies": []
+    },
+    {
+      "content": "",
       "createdAt": "Aujourd'hui",
       "score": 0,
       "user": {

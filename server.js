@@ -73,4 +73,35 @@ app.post("/api/replyToPost", (req, res) => {
       username: "juliusomo",
     },
   };
+  // Lire le fichier data.json
+  fs.readFile("./data.json", (err, data) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Erreur lors de la lecture du fichier");
+      return;
+    }
+    let jsonData = JSON.parse(data);
+    // Trouver le commentaire auquel on répond
+    const comment = jsonData.comments.find(
+      (comment) => comment.user.username === reply.replyingTo
+    );
+
+    // Vérifier si le commentaire existe
+    if (comment) {
+      // Ajouter le reply au commentaire
+      comment.replies.push(reply);
+      // Ecrire le fichier data.json
+      fs.writeFile("./data.json", JSON.stringify(jsonData, null, 2), (err) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Erreur lors de l'écriture dans le fichier");
+          return;
+        } else {
+          res.redirect("/");
+        }
+      });
+    } else {
+      res.status(404).send("Commentaire non trouvé");
+    }
+  });
 });
