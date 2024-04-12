@@ -26,57 +26,6 @@ function decreaseVotes() {
   });
 }
 
-// CREATE POST FUNCTIONS //
-function createComment() {
-  const sendButton = document.querySelector(".sendButton");
-  const commentText = document.querySelector(".comment-text");
-  const form = document.querySelector("form");
-
-  sendButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    console.log("Commentaire posté!");
-    // récupérer le texte du commentaire du champ de texte et le stocker dand un objet
-    let comment = {
-      user: {
-        username: "juliusomo",
-        image: {
-          png: "./images/avatars/image-juliusomo.png",
-        },
-      },
-      content: commentText.value,
-      createdAt: new Date().toLocaleDateString(),
-      replies: [],
-      score: 0,
-    };
-    console.log(comment);
-    // ajouter le commentaire au fichier JSON
-    fetch("./data.json", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(comment),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.text();
-      })
-      .then((data) => {
-        console.log(data);
-        displayComments(); // Rappler la fonction pour afficher les commentaires mis à jour
-      })
-      .catch((error) => {
-        console.log(
-          "There was a problem with the fetch operation: " + error.message
-        );
-      });
-  });
-}
-
-createComment();
-
 // REPLY FUNCTIONS //
 // au clic du boutton reply append une div en dessous de la div parente du boutton
 function replyToPost() {
@@ -212,23 +161,29 @@ function deleteReply() {
 }
 
 // LIRE LES DONNEES DU FICHIER JSON ET LES INTEGRER DANS LE DOM avec la méthode fetch
-fetch("./data.json")
-  .then((reponse) => reponse.json())
-  .then((data) => {
-    // afficher les données dans la console
-    console.log(data);
+function fetchData() {
+  fetch("./data.json")
+    .then((reponse) => reponse.json())
+    .then((data) => {
+      // afficher les données dans la console
+      console.log(data);
 
-    // afficher les données dans le DOM
-    const container = document.querySelector(".container");
+      // afficher les données dans le DOM
+      const container = document.querySelector(".container");
 
-    // pour chaque commentaire dans le fichier JSON
-    data.comments.forEach((comment) => {
-      //créer une div post
-      const postDiv = document.createElement("div");
-      postDiv.classList.add("post");
+      // pour chaque commentaire dans le fichier JSON
+      data.comments.forEach((comment) => {
+        //créer une div post
+        const postDiv = document.createElement("div");
+        postDiv.classList.add("post");
 
-      // Remplir la div "post" avec les données du commentaire
-      postDiv.innerHTML = `
+        // Remplir la div "post" avec les données du commentaire
+        // ajouter la condition if pour afficher le "YOU" dans le cas où le commentaire est de l'utilisateur actuel
+        if (
+          data.currentUser.username === "juliusomo" &&
+          comment.user.username === "juliusomo"
+        ) {
+          postDiv.innerHTML = `
         <div class="votes">
           <div class="plus"><i class="fa-solid fa-plus"></i></div>
           <div class="counter">${comment.score}</div>
@@ -241,6 +196,7 @@ fetch("./data.json")
                 <img src="${comment.user.image.png}" alt="" />
               </div>
               <div class="profil-name">${comment.user.username}</div>
+              <div class="current-user-tag">You</div>
               <div class="post-date">${comment.createdAt}</div>
             </div>
             <div class="content-header-buttons">
@@ -256,23 +212,54 @@ fetch("./data.json")
           </div>
         </div>
       `;
+        } else {
+          postDiv.innerHTML = `
+          <div class="votes">
+            <div class="plus"><i class="fa-solid fa-plus"></i></div>
+            <div class="counter">${comment.score}</div>
+            <div class="minus"><i class="fa-solid fa-minus"></i></div>
+          </div>
+          <div class="content">
+            <div class="content-headers">
+              <div class="content-header-infos">
+                <div class="profil-img">
+                  <img src="${comment.user.image.png}" alt="" />
+                </div>
+                <div class="profil-name">${comment.user.username}</div>
+                <div class="post-date">${comment.createdAt}</div>
+              </div>
+              <div class="content-header-buttons">
+                <button class="reply-btn">
+                  <i class="fa-solid fa-reply"></i>Reply
+                </button>
+              </div>
+            </div>
+            <div class="content-body">
+              <div class="message">
+                <p>${comment.content}</p>
+              </div>
+            </div>
+          </div>
+        `;
+        }
 
-      // Ajouter la div "post" à la div "container"
-      container.appendChild(postDiv);
+        // Ajouter la div "post" à la div "container"
+        container.appendChild(postDiv);
 
-      // pour chaque réponse dans le commentaire actuel on est dans la boucle de commentaire
-      // donc on utilise le (comment) actuel
-      // Pour chaque réponse
-      comment.replies.forEach((reply) => {
-        // Créer une div "reply"
-        const replyDiv = document.createElement("div");
-        replyDiv.classList.add("reply");
+        // pour chaque réponse dans le commentaire actuel on est dans la boucle de commentaire
+        // donc on utilise le (comment) actuel
+        // Pour chaque réponse
+        if (comment.replies) {
+          comment.replies.forEach((reply) => {
+            // Créer une div "reply"
+            const replyDiv = document.createElement("div");
+            replyDiv.classList.add("reply");
 
-        if (
-          data.currentUser.username === "juliusomo" &&
-          reply.user.username === "juliusomo"
-        ) {
-          replyDiv.innerHTML = `
+            if (
+              data.currentUser.username === "juliusomo" &&
+              reply.user.username === "juliusomo"
+            ) {
+              replyDiv.innerHTML = `
           <div class="votes">
             <div class="plus"><i class="fa-solid fa-plus"></i></div>
             <div class="counter">${reply.score}</div>
@@ -304,9 +291,9 @@ fetch("./data.json")
             </div>
           </div>
         `;
-        } else {
-          // Remplir la div "reply" avec les données de la réponse
-          replyDiv.innerHTML = `
+            } else {
+              // Remplir la div "reply" avec les données de la réponse
+              replyDiv.innerHTML = `
           <div class="votes">
             <div class="plus"><i class="fa-solid fa-plus"></i></div>
             <div class="counter">${reply.score}</div>
@@ -334,71 +321,22 @@ fetch("./data.json")
             </div>
           </div>
           `;
+            }
+
+            // Ajouter la div "reply" à la div "post"
+            postDiv.insertAdjacentElement("afterend", replyDiv);
+          });
         }
 
-        // Ajouter la div "reply" à la div "post"
-        postDiv.insertAdjacentElement("afterend", replyDiv);
+        // Appeler les fonctions dans le fetch pour que les événements soient ajoutés aux éléments créés
       });
-
-      // Appeler les fonctions dans le fetch pour que les événements soient ajoutés aux éléments créés
-    });
-    replyToPost();
-    replyToReply();
-    increaseVotes();
-    decreaseVotes();
-    editReply();
-    deleteReply();
-  });
-
-function displayComments() {
-  fetch("./data.json")
-    .then((reponse) => reponse.json())
-    .then((data) => {
-      // afficher les données dans la console
-      console.log(data);
-
-      // afficher les données dans le DOM
-      const container = document.querySelector(".container");
-      container.innerHTML = ""; // Clear the container
-
-      // pour chaque commentaire dans le fichier JSON
-      data.comments.forEach((comment) => {
-        //créer une div post
-        const postDiv = document.createElement("div");
-        postDiv.classList.add("post");
-
-        // Remplir la div "post" avec les données du commentaire
-        postDiv.innerHTML = `
-          <div class="votes">
-            <div class="plus"><i class="fa-solid fa-plus"></i></div>
-            <div class="counter">${comment.score}</div>
-            <div class="minus"><i class="fa-solid fa-minus"></i></div>
-          </div>
-          <div class="content">
-            <div class="content-headers">
-              <div class="content-header-infos">
-                <div class="profil-img">
-                  <img src="${comment.user.image.png}" alt="" />
-                </div>
-                <div class="profil-name">${comment.user.username}</div>
-                <div class="post-date">${comment.createdAt}</div>
-              </div>
-              <div class="content-header-buttons">
-                <button class="reply-btn">
-                  <i class="fa-solid fa-reply"></i>Reply
-                </button>
-              </div>
-            </div>
-            <div class="content-body">
-              <div class="message">
-                <p>${comment.content}</p>
-              </div>
-            </div>
-          </div>
-        `;
-
-        // Ajouter la div "post" à la div "container"
-        container.appendChild(postDiv);
-      });
+      replyToPost();
+      replyToReply();
+      increaseVotes();
+      decreaseVotes();
+      editReply();
+      deleteReply();
     });
 }
+
+fetchData();

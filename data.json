@@ -63,6 +63,20 @@
           }
         }
       ]
+    },
+    {
+      "id": 5,
+      "content": "Ceci est un test de commentaire TEST.",
+      "createdAt": "Aujourd'hui",
+      "score": 0,
+      "replyingTo": "juliusomo",
+      "user": {
+        "image": {
+          "png": "./images/avatars/image-juliusomo.png",
+          "webp": "./images/avatars/image-juliusomo.webp"
+        },
+        "username": "juliusomo"
+      }
     }
   ]
 }
