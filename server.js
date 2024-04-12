@@ -105,3 +105,11 @@ app.post("/api/replyToPost", (req, res) => {
     }
   });
 });
+
+app.post("/api/deleteReply", (req, res) => {
+  res.send("Réponse supprimée");
+});
+
+app.post("/api/updateReply", (req, res) => {
+  res.send("Réponse mise à jour");
+});

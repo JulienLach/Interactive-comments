@@ -142,7 +142,9 @@ function deleteReply() {
           </div>
           <div class="modal-buttons">
           <button class="cancel-remove-btn">ANNULER</button>
-          <button class="remove-comment-btn">VALIDER</button>
+            <form action="/api/deleteReply" method="POST">
+              <button class="remove-comment-btn">VALIDER</button>
+            </form>
           </div>
         </div>
       `;

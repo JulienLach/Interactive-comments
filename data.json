@@ -21,33 +21,7 @@
       },
       "replies": [
         {
-          "content": "@amyrobson aaaa",
-          "createdAt": "Aujourd'hui",
-          "score": 0,
-          "replyingTo": "amyrobson",
-          "user": {
-            "image": {
-              "png": "./images/avatars/image-juliusomo.png",
-              "webp": "./images/avatars/image-juliusomo.webp"
-            },
-            "username": "juliusomo"
-          }
-        },
-        {
-          "content": "@amyrobson BBBBB",
-          "createdAt": "Aujourd'hui",
-          "score": 0,
-          "replyingTo": "amyrobson",
-          "user": {
-            "image": {
-              "png": "./images/avatars/image-juliusomo.png",
-              "webp": "./images/avatars/image-juliusomo.webp"
-            },
-            "username": "juliusomo"
-          }
-        },
-        {
-          "content": "@amyrobson CCCC",
+          "content": "@amyrobson Ceci est un test de réponse à un commentaire pour voir si tout est ok.\r\n\r\n",
           "createdAt": "Aujourd'hui",
           "score": 0,
           "replyingTo": "amyrobson",
@@ -103,7 +77,7 @@
           }
         },
         {
-          "content": "@maxblagun AAAAAAAAAAAAA",
+          "content": "@maxblagun Ceci est un test de réponse à un commentaire pour voir si tout est ok.",
           "createdAt": "Aujourd'hui",
           "score": 0,
           "replyingTo": "maxblagun",
@@ -119,19 +93,6 @@
     },
     {
       "content": "Ceci est un test de commentaire un peu plus long pour pousser la div jusqu'au bout test\r\n\r\n",
-      "createdAt": "Aujourd'hui",
-      "score": 0,
-      "user": {
-        "image": {
-          "png": "./images/avatars/image-juliusomo.png",
-          "webp": "./images/avatars/image-juliusomo.webp"
-        },
-        "username": "juliusomo"
-      },
-      "replies": []
-    },
-    {
-      "content": "",
       "createdAt": "Aujourd'hui",
       "score": 0,
       "user": {
