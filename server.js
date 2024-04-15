@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// Route pour traiter la requete post et tester avec postman
+// Route pour traiter la requete post pour poster un commentaire  (tester avec postman)
 app.post("/api", (req, res) => {
   const commentText = req.body.content;
   const comment = {
@@ -59,7 +59,7 @@ app.post("/api", (req, res) => {
   });
 });
 
-// Route pour traiter le le reply à un post et tester avec postman
+// Route pour traiter post d'un reply à un commantaire (tester avec postman)
 app.post("/api/replyToPost", (req, res) => {
   const replyText = req.body.content;
   const reply = {
@@ -134,6 +134,57 @@ app.post("/api/deleteReply", (req, res) => {
       }
       res.redirect("/");
     });
+  });
+});
+
+// Route pour traiter le le reply à un reply
+app.post("/api/replyToReply", (req, res) => {
+  const replyText = req.body.content;
+  const replyId = req.body.replyId;
+  const reply = {
+    id: id.v4(), // créé un id unique avec uuid pour le post d'une réponse à un commentaire
+    content: replyText,
+    createdAt: "Aujourd'hui",
+    score: 0,
+    replyingTo: req.body.replyingTo,
+    user: {
+      image: {
+        png: "./images/avatars/image-juliusomo.png",
+        webp: "./images/avatars/image-juliusomo.webp",
+      },
+      username: "juliusamo",
+    },
+  };
+  // lire le fichier data.json
+  fs.readFile("./data.json", (err, data) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send("Erreur lors de la lecture du fichier");
+      return;
+    }
+    let jsonData = JSON.parse(data);
+    // trouver la reply à laquelle on répond
+    const replyToReply = jsonData.comments.find(
+      (replyToReply) => replyToReply.id === replyId
+    );
+
+    // vérifier si le reply existe
+    if (replyToReply) {
+      // ajouter le reply au reply
+      replyToReply.replies.push(reply);
+      // écrire le fichier data.json
+      fs.writeFile("./data.json", JSON.stringify(jsonData, null, 2), (err) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Erreur lors de l'écriture dans le fichier");
+          return;
+        } else {
+          res.redirect("/");
+        }
+      });
+    } else {
+      res.status(404).send("Reply non trouvé");
+    }
   });
 });
 

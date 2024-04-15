@@ -76,15 +76,17 @@ function replyToReply() {
 
       const postDiv = button.closest(".reply");
       const replyDiv = document.createElement("div");
+      const replyId = postDiv.getAttribute("data-id"); // obtenir l'ID de la réponse
       button.classList.add("clicked");
       replyDiv.innerHTML = `<div class="reply">
-      <form action="index.html">
+      <form action="/api/replyToReply" method="POST">
         <img src="./images/avatars/image-juliusomo.png" alt="" />
         <textarea
           class="comment-text"
           rows="4"
           placeholder="Add a comment..."
-        >@taggedUser </textarea>
+        >@taggedUser ${replyId}</textarea>
+        <input type="hidden" name="replyId" value="${replyId}"/>
         <button id="submitButton" class="sendButton">REPLY</button>
       </form>
     </div>
@@ -265,6 +267,7 @@ function fetchData() {
             // Créer une div "reply"
             const replyDiv = document.createElement("div");
             replyDiv.classList.add("reply");
+            replyDiv.setAttribute("data-id", reply.id); // Ajouter l'ID de la réponse
 
             if (
               data.currentUser.username === "juliusamo" &&
