@@ -4,7 +4,7 @@
       "png": "./images/avatars/image-juliusomo.png",
       "webp": "./images/avatars/image-juliusomo.webp"
     },
-    "username": "juliusomo"
+    "username": "juliusamo"
   },
   "comments": [
     {
@@ -21,7 +21,8 @@
       },
       "replies": [
         {
-          "content": "@amyrobson Ceci est un test de réponse à un commentaire pour voir si tout est ok.\r\n\r\n",
+          "id": "adf06855-8d9a-4878-be55-70a8dc94e651",
+          "content": "@amyrobson Ceci est un test de réponse à un commentaire pour voir si tout est ok et si l'ID de la reply se créé.",
           "createdAt": "Aujourd'hui",
           "score": 0,
           "replyingTo": "amyrobson",
@@ -30,7 +31,7 @@
               "png": "./images/avatars/image-juliusomo.png",
               "webp": "./images/avatars/image-juliusomo.webp"
             },
-            "username": "juliusomo"
+            "username": "juliusamo"
           }
         }
       ]
@@ -73,25 +74,13 @@
               "png": "./images/avatars/image-juliusomo.png",
               "webp": "./images/avatars/image-juliusomo.webp"
             },
-            "username": "juliusomo"
-          }
-        },
-        {
-          "content": "@maxblagun Ceci est un test de réponse à un commentaire pour voir si tout est ok.",
-          "createdAt": "Aujourd'hui",
-          "score": 0,
-          "replyingTo": "maxblagun",
-          "user": {
-            "image": {
-              "png": "./images/avatars/image-juliusomo.png",
-              "webp": "./images/avatars/image-juliusomo.webp"
-            },
-            "username": "juliusomo"
+            "username": "juliusamo"
           }
         }
       ]
     },
     {
+      "id": "aftfa45-aec8-67c0-9ee4-fgtd467379c5",
       "content": "Ceci est un test de commentaire un peu plus long pour pousser la div jusqu'au bout test\r\n\r\n",
       "createdAt": "Aujourd'hui",
       "score": 0,
@@ -100,9 +89,24 @@
           "png": "./images/avatars/image-juliusomo.png",
           "webp": "./images/avatars/image-juliusomo.webp"
         },
-        "username": "juliusomo"
+        "username": "juliusamo"
       },
-      "replies": []
+      "replies": [
+        {
+          "id": "c49fa2c1-aec8-48c0-9ee4-f972c67379c5",
+          "content": "@juliusamo Test réponse post avec l'ID de la réponse.",
+          "createdAt": "Aujourd'hui",
+          "score": 0,
+          "replyingTo": "juliusamo",
+          "user": {
+            "image": {
+              "png": "./images/avatars/image-juliusomo.png",
+              "webp": "./images/avatars/image-juliusomo.webp"
+            },
+            "username": "juliusamo"
+          }
+        }
+      ]
     }
   ]
 }

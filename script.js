@@ -131,6 +131,7 @@ function deleteReply() {
   const deleteButtons = document.querySelectorAll(".delete-btn");
   deleteButtons.forEach((button) => {
     button.addEventListener("click", () => {
+      const replyId = button.getAttribute("data-id");
       const dialog = document.createElement("dialog");
       dialog.innerHTML = `
         <div class="modal-content">
@@ -141,9 +142,13 @@ function deleteReply() {
           <p>Êtes-vous sûr de vouloir supprimer ce commentaire ? Impossible de revenir en arrière après la suppression</p>
           </div>
           <div class="modal-buttons">
-          <button class="cancel-remove-btn">ANNULER</button>
+            <form action="/api/cancel" method="GET">
+              <button class="cancel-remove-btn">ANNULER</button>
+            </form>
             <form action="/api/deleteReply" method="POST">
               <button class="remove-comment-btn">VALIDER</button>
+              <input type="hidden" name="id" value="${replyId}" />
+              <input type="text "value="${replyId}" name="content">
             </form>
           </div>
         </div>
@@ -187,8 +192,8 @@ function fetchData() {
         // Remplir la div "post" avec les données du commentaire
         // ajouter la condition if pour afficher le "YOU" dans le cas où le commentaire est de l'utilisateur actuel
         if (
-          data.currentUser.username === "juliusomo" &&
-          comment.user.username === "juliusomo"
+          data.currentUser.username === "juliusamo" &&
+          comment.user.username === "juliusamo"
         ) {
           postDiv.innerHTML = `
         <div class="votes">
@@ -263,8 +268,8 @@ function fetchData() {
             replyDiv.classList.add("reply");
 
             if (
-              data.currentUser.username === "juliusomo" &&
-              reply.user.username === "juliusomo"
+              data.currentUser.username === "juliusamo" &&
+              reply.user.username === "juliusamo"
             ) {
               replyDiv.innerHTML = `
           <div class="votes">
@@ -283,7 +288,7 @@ function fetchData() {
                 <div class="post-date">${reply.createdAt}</div>
               </div>
               <div class="content-header-buttons">
-                <button class="delete-btn">
+                <button class="delete-btn" data-id="${reply.id}">
                   <i class="fa-solid fa-trash"></i>Delete
                 </button>
                 <button class="edit-btn">

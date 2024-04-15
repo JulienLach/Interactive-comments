@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const app = express();
+const id = require("uuid");
 
 // Déplacez cette ligne avant les routes
 app.use(express.static(__dirname)); // Serve static files from the current directory
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 app.post("/api", (req, res) => {
   const commentText = req.body.content;
   const comment = {
+    id: id.v4(), // créé un id unique avec uuid pour le post d'un commentaire
     content: commentText,
     createdAt: "Aujourd'hui",
     score: 0,
@@ -33,7 +35,7 @@ app.post("/api", (req, res) => {
         png: "./images/avatars/image-juliusomo.png",
         webp: "./images/avatars/image-juliusomo.webp",
       },
-      username: "juliusomo",
+      username: "juliusamo",
     },
     replies: [],
   };
@@ -61,6 +63,7 @@ app.post("/api", (req, res) => {
 app.post("/api/replyToPost", (req, res) => {
   const replyText = req.body.content;
   const reply = {
+    id: id.v4(), // créé un id unique avec uuid pour le post d'une réponse à un commentaire
     content: replyText,
     createdAt: "Aujourd'hui",
     score: 0,
@@ -70,7 +73,7 @@ app.post("/api/replyToPost", (req, res) => {
         png: "./images/avatars/image-juliusomo.png",
         webp: "./images/avatars/image-juliusomo.webp",
       },
-      username: "juliusomo",
+      username: "juliusamo",
     },
   };
   // Lire le fichier data.json
@@ -107,7 +110,7 @@ app.post("/api/replyToPost", (req, res) => {
 });
 
 app.post("/api/deleteReply", (req, res) => {
-  res.send("Réponse supprimée");
+  // res.send("Réponse supprimée");
 });
 
 app.post("/api/updateReply", (req, res) => {
