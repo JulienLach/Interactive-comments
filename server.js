@@ -10,7 +10,7 @@ app.use(express.static(__dirname)); // Serve static files from the current direc
 // Pour analyser les corps de requête JSON
 app.use(express.json());
 
-// Middleware pour analyser les corps de requête URL encodés
+// Middleware pour analyser les corps de requête URL encodés (formulaires) pour par exemple faire passer des données de formulaire
 app.use(express.urlencoded({ extended: true }));
 
 app.listen(3000, () => {
@@ -109,10 +109,35 @@ app.post("/api/replyToPost", (req, res) => {
   });
 });
 
+// Route pour traiter le delete reply d'un commentaire
 app.post("/api/deleteReply", (req, res) => {
-  // res.send("Réponse supprimée");
+  const replyId = req.body.replyId;
+
+  fs.readFile("./data.json", "utf8", (err, data) => {
+    if (err) {
+      res.status(500).send("Erreur lors de la lecture du fichier");
+      return;
+    }
+
+    const jsonData = JSON.parse(data); // Convertir le contenu du fichier en objet JSON
+    jsonData.comments.forEach((comment) => {
+      const index = comment.replies.findIndex((reply) => reply.id === replyId);
+      if (index !== -1) {
+        comment.replies.splice(index, 1);
+      }
+    });
+
+    fs.writeFile("./data.json", JSON.stringify(jsonData), "utf8", (err) => {
+      if (err) {
+        res.status(500).send("Erreur lors de l'écriture du fichier");
+        return;
+      }
+      res.redirect("/");
+    });
+  });
 });
 
+// Route pour traiter le update d'une reply à un commentaire
 app.post("/api/updateReply", (req, res) => {
   res.send("Réponse mise à jour");
 });

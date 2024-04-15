@@ -142,13 +142,12 @@ function deleteReply() {
           <p>Êtes-vous sûr de vouloir supprimer ce commentaire ? Impossible de revenir en arrière après la suppression</p>
           </div>
           <div class="modal-buttons">
-            <form action="/api/cancel" method="GET">
+            <form action="/" method="">
               <button class="cancel-remove-btn">ANNULER</button>
             </form>
             <form action="/api/deleteReply" method="POST">
               <button class="remove-comment-btn">VALIDER</button>
-              <input type="hidden" name="id" value="${replyId}" />
-              <input type="text "value="${replyId}" name="content">
+              <input type="hidden" name="replyId" value="${replyId}"/>
             </form>
           </div>
         </div>
