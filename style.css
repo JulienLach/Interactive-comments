@@ -105,7 +105,8 @@ img {
 }
 
 /* BUTTONS */
-.reply-btn,
+.reply-to-post-btn,
+.reply-to-reply-btn,
 .delete-btn,
 .edit-btn {
   height: fit-content;
@@ -123,7 +124,8 @@ img {
   transition: 0.1s;
 }
 
-.reply-btn:hover,
+.reply-to-post-btn:hover,
+.reply-to-reply-btn:hover,
 .delete-btn:hover,
 .edit-btn:hover {
   background-color: #ffcbbb;

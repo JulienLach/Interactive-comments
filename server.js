@@ -137,56 +137,8 @@ app.post("/api/deleteReply", (req, res) => {
   });
 });
 
-// Route pour traiter le le reply à un reply
-app.post("/api/replyToReply", (req, res) => {
-  const replyText = req.body.content;
-  const replyId = req.body.replyId;
-  const reply = {
-    id: id.v4(), // créé un id unique avec uuid pour le post d'une réponse à un commentaire
-    content: replyText,
-    createdAt: "Aujourd'hui",
-    score: 0,
-    replyingTo: req.body.replyingTo,
-    user: {
-      image: {
-        png: "./images/avatars/image-juliusomo.png",
-        webp: "./images/avatars/image-juliusomo.webp",
-      },
-      username: "juliusamo",
-    },
-  };
-  // lire le fichier data.json
-  fs.readFile("./data.json", (err, data) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send("Erreur lors de la lecture du fichier");
-      return;
-    }
-    let jsonData = JSON.parse(data);
-    // trouver la reply à laquelle on répond
-    const replyToReply = jsonData.comments.find(
-      (replyToReply) => replyToReply.id === replyId
-    );
-
-    // vérifier si le reply existe
-    if (replyToReply) {
-      // ajouter le reply au reply
-      replyToReply.replies.push(reply);
-      // écrire le fichier data.json
-      fs.writeFile("./data.json", JSON.stringify(jsonData, null, 2), (err) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send("Erreur lors de l'écriture dans le fichier");
-          return;
-        } else {
-          res.redirect("/");
-        }
-      });
-    } else {
-      res.status(404).send("Reply non trouvé");
-    }
-  });
-});
+// Route pour traier le reply d'un reply à un commentaire
+app.post("/api/replyToReply", (req, res) => {});
 
 // Route pour traiter le update d'une reply à un commentaire
 app.post("/api/updateReply", (req, res) => {
