@@ -182,6 +182,31 @@ app.post("/api/deletePost", (req, res) => {
   }
 });
 
+app.post("/api/deleteReplyToReply", (req, res) => {
+  const replyId = req.body.replyId;
+  try {
+    let data = fs.readFileSync("./data.json", "utf8");
+    const jsonData = JSON.parse(data);
+    jsonData.comments.forEach((comment) => {
+      comment.replies.forEach((reply) => {
+        const index = reply.repliesToReply.findIndex(
+          (replyToReply) => replyToReply.id === replyId
+        );
+        if (index !== -1) {
+          reply.repliesToReply.splice(index, 1);
+        }
+      });
+    });
+    fs.writeFileSync("./data.json", JSON.stringify(jsonData), "utf8");
+    res.redirect("http://localhost:3000/index.html");
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .send("Erreur lors de la lecture ou de l'écriture du fichier");
+  }
+});
+
 // Route pour traiter le update d'une reply à un commentaire
 app.post("/api/updateReply", (req, res) => {
   res.send("Réponse mise à jour");

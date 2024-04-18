@@ -225,6 +225,52 @@ function deletePost() {
   });
 }
 
+function deleteReplyToReply() {
+  const deleteRepliesButtons = document.querySelectorAll(
+    ".delete-reply-to-reply-btn"
+  );
+  deleteRepliesButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const replyId = button.getAttribute("data-id");
+      const dialog = document.createElement("dialog");
+      dialog.innerHTML = `
+        <div class="modal-content">
+          <div class="modal-header">
+          <h2>Supprimer le commentaire</h2>
+          </div>
+          <div class="modal-body">
+          <p>Êtes-vous sûr de vouloir supprimer ce commentaire ? Impossible de revenir en arrière après la suppression</p>
+          </div>
+          <div class="modal-buttons">
+            <form action="/" method="">
+              <button class="cancel-remove-btn">ANNULER</button>
+            </form>
+            <form action="/api/deleteReplyToReply" method="POST">
+              <button class="remove-comment-btn">VALIDER</button>
+              <input type="hidden" name="replyId" value="${replyId}"/>
+            </form>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(dialog);
+
+      // Ouvrir le dialogue
+      dialog.showModal();
+
+      // Fermer le dialogue lorsque le bouton "CANCEL" est cliqué
+      dialog.querySelector(".cancel-btn").addEventListener("click", () => {
+        dialog.close();
+      });
+
+      // Supprimer le dialogue lorsque le bouton "DELETE" est cliqué
+      dialog.querySelector(".delete-btn").addEventListener("click", () => {
+        // Ici, vous pouvez ajouter le code pour supprimer la réponse
+        dialog.remove();
+      });
+    });
+  });
+}
+
 // LIRE LES DONNEES DU FICHIER JSON ET LES INTEGRER DANS LE DOM avec la méthode fetch
 
 function fetchData() {
@@ -433,7 +479,7 @@ function fetchData() {
                         <div class="post-date">${replyToReply.createdAt}</div>
                       </div>
                       <div class="content-header-buttons">
-                        <button class="delete-btn" data-id="${replyToReply.id}">
+                        <button class="delete-reply-to-reply-btn" data-id="${replyToReply.id}">
                           <i class="fa-solid fa-trash"></i>Delete
                         </button>
                         <button class="edit-btn">
@@ -465,13 +511,10 @@ function fetchData() {
                         <div class="post-date">${replyToReply.createdAt}</div>
                       </div>
                       <div class="content-header-buttons">
-                      <button class="delete-btn" data-id="${replyToReply.id}">
-                        <i class="fa-solid fa-trash"></i>Delete
-                      </button>
-                      <button class="edit-btn">
-                        <i class="fas fa-edit"></i>Edit
-                      </button>
-                    </div>
+                        <button class="reply-to-reply-btn">
+                          <i class="fa-solid fa-reply"></i>Reply
+                        </button>
+                      </div>
                     </div>
                     <div class="content-body">
                       <div class="message">
@@ -496,6 +539,7 @@ function fetchData() {
       editReply();
       deleteReply();
       deletePost();
+      deleteReplyToReply();
       increaseVotes();
       decreaseVotes();
     });
