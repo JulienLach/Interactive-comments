@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 app.post("/api", (req, res) => {
   const commentText = req.body.content;
   const comment = {
-    id: id.v4(), // créé un id unique avec uuid pour le post d'un commentaire
+    id: id.v4(),
     content: commentText,
     createdAt: "Aujourd'hui",
     score: 0,
@@ -39,31 +39,27 @@ app.post("/api", (req, res) => {
     },
     replies: [],
   };
-  fs.readFile("./data.json", (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Erreur lors de la lecture du fichier");
-      return;
-    }
+  try {
+    let data = fs.readFileSync("./data.json");
     let jsonData = JSON.parse(data);
     jsonData.comments.push(comment);
-    fs.writeFile("./data.json", JSON.stringify(jsonData, null, 2), (err) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Erreur lors de l'écriture dans le fichier");
-        return;
-      } else {
-        res.redirect("/");
-      }
-    });
-  });
+    fs.writeFileSync("./data.json", JSON.stringify(jsonData, null, 2));
+    res.redirect("http://localhost:3000/index.html");
+    console.log("Commentaire ajouté avec succès");
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .send("Erreur lors de la lecture ou de l'écriture du fichier");
+  }
 });
 
 // Route pour traiter post d'un reply à un commantaire (tester avec postman)
 app.post("/api/replyToPost", (req, res) => {
   const replyText = req.body.content;
+  const commentId = req.body.commentId;
   const reply = {
-    id: id.v4(), // créé un id unique avec uuid pour le post d'une réponse à un commentaire
+    id: id.v4(),
     content: replyText,
     createdAt: "Aujourd'hui",
     score: 0,
@@ -76,69 +72,55 @@ app.post("/api/replyToPost", (req, res) => {
       username: "juliusamo",
     },
   };
-  // Lire le fichier data.json
-  fs.readFile("./data.json", (err, data) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send("Erreur lors de la lecture du fichier");
-      return;
-    }
+  try {
+    let data = fs.readFileSync("./data.json");
     let jsonData = JSON.parse(data);
-    // Trouver le commentaire auquel on répond
     const comment = jsonData.comments.find(
-      (comment) => comment.user.username === reply.replyingTo
+      (comment) =>
+        comment.user.username === reply.replyingTo && comment.id === commentId
     );
-
-    // Vérifier si le commentaire existe
     if (comment) {
-      // Ajouter le reply au commentaire
       comment.replies.push(reply);
-      // Ecrire le fichier data.json
-      fs.writeFile("./data.json", JSON.stringify(jsonData, null, 2), (err) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send("Erreur lors de l'écriture dans le fichier");
-          return;
-        } else {
-          res.redirect("/");
-        }
-      });
+      fs.writeFileSync("./data.json", JSON.stringify(jsonData, null, 2));
+      res.redirect("http://localhost:3000/index.html");
+      console.log("Réponse ajoutée avec succès");
     } else {
       res.status(404).send("Commentaire non trouvé");
     }
-  });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .send("Erreur lors de la lecture ou de l'écriture du fichier");
+  }
 });
 
 // Route pour traiter le delete reply d'un commentaire
 app.post("/api/deleteReply", (req, res) => {
   const replyId = req.body.replyId;
-
-  fs.readFile("./data.json", "utf8", (err, data) => {
-    if (err) {
-      res.status(500).send("Erreur lors de la lecture du fichier");
-      return;
-    }
-
-    const jsonData = JSON.parse(data); // Convertir le contenu du fichier en objet JSON
+  try {
+    let data = fs.readFileSync("./data.json", "utf8");
+    const jsonData = JSON.parse(data);
     jsonData.comments.forEach((comment) => {
       const index = comment.replies.findIndex((reply) => reply.id === replyId);
       if (index !== -1) {
         comment.replies.splice(index, 1);
       }
     });
-
-    fs.writeFile("./data.json", JSON.stringify(jsonData), "utf8", (err) => {
-      if (err) {
-        res.status(500).send("Erreur lors de l'écriture du fichier");
-        return;
-      }
-      res.redirect("/");
-    });
-  });
+    fs.writeFileSync("./data.json", JSON.stringify(jsonData), "utf8");
+    res.redirect("http://localhost:3000/index.html");
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .send("Erreur lors de la lecture ou de l'écriture du fichier");
+  }
 });
 
 // Route pour traier le reply d'un reply à un commentaire
-app.post("/api/replyToReply", (req, res) => {});
+app.post("/api/replyToReply", (req, res) => {
+  res.send("Réponse à une réponse");
+});
 
 // Route pour traiter le update d'une reply à un commentaire
 app.post("/api/updateReply", (req, res) => {

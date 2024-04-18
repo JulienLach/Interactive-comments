@@ -1,11 +1,9 @@
-// let counters = document.querySelectorAll(".counter");
-const plusButtons = document.querySelectorAll(".plus");
-const minusButtons = document.querySelectorAll(".minus");
-const replyButtons = document.querySelectorAll(".reply-btn");
-const editButtons = document.querySelectorAll(".edit-btn");
-// const deleteButtons = document.querySelectorAll(".delete-btn");
+document.addEventListener("DOMContentLoaded", function () {
+  fetchData();
+  replyToPost();
+  replyToReply();
+});
 
-// VOTES //
 function increaseVotes() {
   const plusButtons = document.querySelectorAll(".plus");
   const counters = document.querySelectorAll(".counter");
@@ -46,6 +44,7 @@ function replyToPost() {
       const userToReply = button
         .closest(".content")
         .querySelector(".profil-name").innerText;
+      const commentId = postDiv.getAttribute("data-id"); // obtenir l'ID de la réponse
 
       replyDiv.innerHTML = `<div class="post">
       <form action="/api/replyToPost" method="POST">
@@ -55,12 +54,13 @@ function replyToPost() {
           class="comment-text"
           rows="4"
           placeholder="Add a comment..."
-        >@${userToReply} </textarea>
+        >@${userToReply} ${commentId}</textarea>
         <input type="hidden" name="replyingTo" value="${userToReply}" />
+        <input type="hidden" name="commentId" value="${commentId}" />
         <button id="submitButton" class="sendButton">REPLY</button>
       </form>
     </div>
-  </div>`;
+    </div>`;
       postDiv.insertAdjacentElement("afterend", replyDiv);
     });
   });
@@ -177,8 +177,9 @@ function deleteReply() {
 }
 
 // LIRE LES DONNEES DU FICHIER JSON ET LES INTEGRER DANS LE DOM avec la méthode fetch
+
 function fetchData() {
-  fetch("./data.json")
+  fetch("data.json")
     .then((reponse) => reponse.json())
     .then((data) => {
       // afficher les données dans la console
@@ -192,6 +193,8 @@ function fetchData() {
         //créer une div post
         const postDiv = document.createElement("div");
         postDiv.classList.add("post");
+        // ajouter dataset data-id à la postDiv
+        postDiv.setAttribute("data-id", comment.id);
 
         // Remplir la div "post" avec les données du commentaire
         // ajouter la condition if pour afficher le "YOU" dans le cas où le commentaire est de l'utilisateur actuel
@@ -342,18 +345,15 @@ function fetchData() {
 
             // Ajouter la div "reply" à la div "post"
             postDiv.insertAdjacentElement("afterend", replyDiv);
-
-            // Appeler les fonctions dans le fetch pour que les événements soient ajoutés aux éléments créés
-            replyToReply();
-            replyToPost();
-            editReply();
-            deleteReply();
-            increaseVotes();
-            decreaseVotes();
           });
         }
       });
+      // Appeler les fonctions dans le fetch pour que les événements soient ajoutés aux éléments créés
+      replyToReply();
+      replyToPost();
+      editReply();
+      deleteReply();
+      increaseVotes();
+      decreaseVotes();
     });
 }
-
-fetchData();
