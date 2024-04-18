@@ -161,6 +161,27 @@ app.post("/api/replyToReply", (req, res) => {
   }
 });
 
+app.post("/api/deletePost", (req, res) => {
+  const commentId = req.body.commentId;
+  try {
+    let data = fs.readFileSync("./data.json", "utf8");
+    const jsonData = JSON.parse(data);
+    const index = jsonData.comments.findIndex(
+      (comment) => comment.id === commentId
+    );
+    if (index !== -1) {
+      jsonData.comments.splice(index, 1);
+    }
+    fs.writeFileSync("./data.json", JSON.stringify(jsonData), "utf8");
+    res.redirect("http://localhost:3000/index.html");
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .send("Erreur lors de la lecture ou de l'écriture du fichier");
+  }
+});
+
 // Route pour traiter le update d'une reply à un commentaire
 app.post("/api/updateReply", (req, res) => {
   res.send("Réponse mise à jour");

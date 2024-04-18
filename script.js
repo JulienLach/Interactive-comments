@@ -84,7 +84,7 @@ function replyToReply() {
         .querySelector(".profil-name").innerText;
       const replyId = parentReplyDiv.getAttribute("data-id"); // obtenir l'ID de la réponse
       button.classList.add("clicked");
-      replyDiv.innerHTML = `<div class="reply">
+      replyDiv.innerHTML = `<div class="reply-to-reply">
       <form action="/api/replyToReply" method="POST">
         <img src="./images/avatars/image-juliusomo.png" alt="" />
         <textarea
@@ -181,6 +181,50 @@ function deleteReply() {
   });
 }
 
+function deletePost() {
+  const deleteButtons = document.querySelectorAll(".delete-post-btn");
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const commentId = button.getAttribute("data-id");
+      const dialog = document.createElement("dialog");
+      dialog.innerHTML = `
+        <div class="modal-content">
+          <div class="modal-header">
+          <h2>Supprimer le commentaire</h2>
+          </div>
+          <div class="modal-body">
+          <p>Êtes-vous sûr de vouloir supprimer ce commentaire ? Impossible de revenir en arrière après la suppression</p>
+          </div>
+          <div class="modal-buttons">
+            <form action="/" method="">
+              <button class="cancel-remove-btn">ANNULER</button>
+            </form>
+            <form action="/api/deletePost" method="POST">
+              <button class="remove-comment-btn">VALIDER</button>
+              <input type="hidden" name="commentId" value="${commentId}"/>
+            </form>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(dialog);
+
+      // Ouvrir le dialogue
+      dialog.showModal();
+
+      // Fermer le dialogue lorsque le bouton "CANCEL" est cliqué
+      dialog.querySelector(".cancel-btn").addEventListener("click", () => {
+        dialog.close();
+      });
+
+      // Supprimer le dialogue lorsque le bouton "DELETE" est cliqué
+      dialog.querySelector(".delete-btn").addEventListener("click", () => {
+        // Ici, vous pouvez ajouter le code pour supprimer la réponse
+        dialog.remove();
+      });
+    });
+  });
+}
+
 // LIRE LES DONNEES DU FICHIER JSON ET LES INTEGRER DANS LE DOM avec la méthode fetch
 
 function fetchData() {
@@ -222,6 +266,14 @@ function fetchData() {
               <div class="profil-name">${comment.user.username}</div>
               <div class="current-user-tag">You</div>
               <div class="post-date">${comment.createdAt}</div>
+            </div>
+            <div class="content-header-buttons">
+              <button class="delete-post-btn" data-id="${comment.id}">
+                <i class="fa-solid fa-trash"></i>Delete
+              </button>
+              <button class="edit-btn">
+                <i class="fas fa-edit"></i>Edit
+              </button>
             </div>
             <div class="content-header-buttons">
               <button class="reply-to-post-btn">
@@ -350,14 +402,100 @@ function fetchData() {
 
             // Ajouter la div "reply" à la div "post"
             postDiv.insertAdjacentElement("afterend", replyDiv);
+
+            // Pour chaque réponse à une réponse
+            if (reply.repliesToReply) {
+              reply.repliesToReply.forEach((replyToReply) => {
+                // Créer une div pour la réponse à la réponse
+                const replyToReplyDiv = document.createElement("div");
+                replyToReplyDiv.classList.add("reply-to-reply");
+                replyToReplyDiv.setAttribute("data-id", replyToReply.id); // Ajouter l'ID de la réponse à la réponse
+
+                // Remplir la div "reply-to-reply" avec les données de la réponse à la réponse
+                if (
+                  data.currentUser.username === "juliusamo" &&
+                  replyToReply.user.username === "juliusamo"
+                ) {
+                  replyToReplyDiv.innerHTML = `
+                  <div class="votes">
+                    <div class="plus"><i class="fa-solid fa-plus"></i></div>
+                    <div class="counter">${reply.score}</div>
+                    <div class="minus"><i class="fa-solid fa-minus"></i></div>
+                  </div>
+                  <div class="content">
+                    <div class="content-headers">
+                      <div class="content-header-infos">
+                        <div class="profil-img">
+                          <img src="${replyToReply.user.image.png}" alt="" />
+                        </div>
+                        <div class="profil-name">${replyToReply.user.username}</div>
+                        <div class="current-user-tag">You</div>
+                        <div class="post-date">${replyToReply.createdAt}</div>
+                      </div>
+                      <div class="content-header-buttons">
+                        <button class="delete-btn" data-id="${replyToReply.id}">
+                          <i class="fa-solid fa-trash"></i>Delete
+                        </button>
+                        <button class="edit-btn">
+                          <i class="fas fa-edit"></i>Edit
+                        </button>
+                      </div>
+                    </div>
+                    <div class="content-body">
+                      <div class="message">
+                        <p>${replyToReply.content}</p>
+                      </div>
+                    </div>
+                  </div>
+                `;
+                } else {
+                  replyToReplyDiv.innerHTML = `
+                  <div class="votes">
+                    <div class="plus"><i class="fa-solid fa-plus"></i></div>
+                    <div class="counter">${reply.score}</div>
+                    <div class="minus"><i class="fa-solid fa-minus"></i></div>
+                  </div>
+                  <div class="content">
+                    <div class="content-headers">
+                      <div class="content-header-infos">
+                        <div class="profil-img">
+                          <img src="${replyToReply.user.image.png}" alt="" />
+                        </div>
+                        <div class="profil-name">${replyToReply.user.username}</div>
+                        <div class="post-date">${replyToReply.createdAt}</div>
+                      </div>
+                      <div class="content-header-buttons">
+                      <button class="delete-btn" data-id="${replyToReply.id}">
+                        <i class="fa-solid fa-trash"></i>Delete
+                      </button>
+                      <button class="edit-btn">
+                        <i class="fas fa-edit"></i>Edit
+                      </button>
+                    </div>
+                    </div>
+                    <div class="content-body">
+                      <div class="message">
+                        <p>${replyToReply.content}</p>
+                      </div>
+                    </div>
+                  </div>
+                `;
+                }
+
+                // Ajouter la div "reply-to-reply" à la div "reply"
+                replyDiv.insertAdjacentElement("afterend", replyToReplyDiv);
+              });
+            }
           });
         }
       });
+
       // Appeler les fonctions dans le fetch pour que les événements soient ajoutés aux éléments créés
       replyToReply();
       replyToPost();
       editReply();
       deleteReply();
+      deletePost();
       increaseVotes();
       decreaseVotes();
     });
