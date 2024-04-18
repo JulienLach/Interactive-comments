@@ -70,6 +70,7 @@ app.post("/api/replyToPost", (req, res) => {
         webp: "./images/avatars/image-juliusomo.webp",
       },
       username: "juliusamo",
+      repliesToReply: [],
     },
   };
   try {
@@ -119,7 +120,45 @@ app.post("/api/deleteReply", (req, res) => {
 
 // Route pour traier le reply d'un reply à un commentaire
 app.post("/api/replyToReply", (req, res) => {
-  res.send("Réponse à une réponse");
+  // res.send("Réponse à une réponse");
+  const replyText = req.body.content;
+  const replyId = req.body.replyId;
+  // const commentId = req.body.commentId;
+  const replyToReply = {
+    id: id.v4(),
+    content: replyText,
+    createdAt: "Aujourd'hui",
+    score: 0,
+    replyingTo: req.body.replyingTo,
+    user: {
+      image: {
+        png: "./images/avatars/image-juliusomo.png",
+        webp: "./images/avatars/image-juliusomo.webp",
+      },
+      username: "juliusamo",
+    },
+    username: "juliusamo",
+  };
+  try {
+    let data = fs.readFileSync("./data.json");
+    let jsonData = JSON.parse(data);
+    jsonData.comments.forEach((comment) => {
+      comment.replies.forEach((reply) => {
+        if (reply.id === replyId) {
+          // Accédez à repliesToReply via reply.repliesToReply
+          reply.repliesToReply.push(replyToReply);
+          fs.writeFileSync("./data.json", JSON.stringify(jsonData, null, 2));
+          res.redirect("http://localhost:3000/index.html");
+          console.log("Réponse à une réponse ajoutée avec succès");
+        }
+      });
+    });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .send("Erreur lors de la lecture ou de l'écriture du fichier");
+  }
 });
 
 // Route pour traiter le update d'une reply à un commentaire

@@ -8,7 +8,7 @@
   },
   "comments": [
     {
-      "id": 1,
+      "id": "164c35d6-cc06-45a1-99b5-6450f48a8aee",
       "content": "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.",
       "createdAt": "1 month ago",
       "score": 12,
@@ -22,7 +22,7 @@
       "replies": []
     },
     {
-      "id": 2,
+      "id": "15f585f4-8350-4f23-b598-ff97c21d2409",
       "content": "Woah, your project looks awesome! How long have you been coding for? I'm still new, but think I want to dive into React as well soon. Perhaps you can give me an insight on where I can learn React? Thanks!",
       "createdAt": "2 weeks ago",
       "score": 5,
@@ -46,7 +46,8 @@
               "webp": "./images/avatars/image-ramsesmiron.webp"
             },
             "username": "ramsesmiron"
-          }
+          },
+          "repliesToReply": []
         },
         {
           "id": "ce40a44e-9dd1-48e9-a6dd-226e74ca138a",
@@ -60,7 +61,24 @@
               "webp": "./images/avatars/image-amyrobson.webp"
             },
             "username": "amyrobson"
-          }
+          },
+          "repliesToReply": [
+            {
+              "id": "9a63d4f9-c845-4fae-a916-ae33b022135c",
+              "content": "@amyrobson ce40a44e-9dd1-48e9-a6dd-226e74ca138a AAAAAAAAAA",
+              "createdAt": "Aujourd'hui",
+              "score": 0,
+              "replyingTo": "amyrobson",
+              "user": {
+                "image": {
+                  "png": "./images/avatars/image-juliusomo.png",
+                  "webp": "./images/avatars/image-juliusomo.webp"
+                },
+                "username": "juliusamo"
+              },
+              "username": "juliusamo"
+            }
+          ]
         }
       ]
     },
@@ -90,109 +108,7 @@
         },
         "username": "juliusamo"
       },
-      "replies": [
-        {
-          "id": "48766b25-e82b-4bd1-854b-5530f84cf097",
-          "content": "@juliusamo 216ba424-3c97-411b-8ba3-60abea148fa0 AAA",
-          "createdAt": "Aujourd'hui",
-          "score": 0,
-          "replyingTo": "juliusamo",
-          "user": {
-            "image": {
-              "png": "./images/avatars/image-juliusomo.png",
-              "webp": "./images/avatars/image-juliusomo.webp"
-            },
-            "username": "juliusamo"
-          }
-        }
-      ]
-    },
-    {
-      "id": "6e60d498-b996-4711-a1fd-75adbdafc9b8",
-      "content": "test commentaire",
-      "createdAt": "Aujourd'hui",
-      "score": 0,
-      "user": {
-        "image": {
-          "png": "./images/avatars/image-juliusomo.png",
-          "webp": "./images/avatars/image-juliusomo.webp"
-        },
-        "username": "juliusamo"
-      },
-      "replies": [
-        {
-          "id": "b541f751-e321-4cde-95e2-cebb722b688d",
-          "content": "@juliusamo 6e60d498-b996-4711-a1fd-75adbdafc9b8AAAAAAAAAAA",
-          "createdAt": "Aujourd'hui",
-          "score": 0,
-          "replyingTo": "juliusamo",
-          "user": {
-            "image": {
-              "png": "./images/avatars/image-juliusomo.png",
-              "webp": "./images/avatars/image-juliusomo.webp"
-            },
-            "username": "juliusamo"
-          }
-        }
-      ]
-    },
-    {
-      "id": "06b027cd-9edf-4264-bee9-8703730a5716",
-      "content": "BBB",
-      "createdAt": "Aujourd'hui",
-      "score": 0,
-      "user": {
-        "image": {
-          "png": "./images/avatars/image-juliusomo.png",
-          "webp": "./images/avatars/image-juliusomo.webp"
-        },
-        "username": "juliusamo"
-      },
-      "replies": [
-        {
-          "id": "0c469b88-55e1-4635-af4f-815abcf37e2c",
-          "content": "@juliusamo 06b027cd-9edf-4264-bee9-8703730a5716 CCCC",
-          "createdAt": "Aujourd'hui",
-          "score": 0,
-          "replyingTo": "juliusamo",
-          "user": {
-            "image": {
-              "png": "./images/avatars/image-juliusomo.png",
-              "webp": "./images/avatars/image-juliusomo.webp"
-            },
-            "username": "juliusamo"
-          }
-        }
-      ]
-    },
-    {
-      "id": "6a0b7570-c16a-4ff5-91e0-f531b63d493e",
-      "content": "DDD",
-      "createdAt": "Aujourd'hui",
-      "score": 0,
-      "user": {
-        "image": {
-          "png": "./images/avatars/image-juliusomo.png",
-          "webp": "./images/avatars/image-juliusomo.webp"
-        },
-        "username": "juliusamo"
-      },
-      "replies": [
-        {
-          "id": "0b1dfbce-32a7-4c74-9bbc-eb0342a3981e",
-          "content": "@juliusamo 6a0b7570-c16a-4ff5-91e0-f531b63d493e DDDD",
-          "createdAt": "Aujourd'hui",
-          "score": 0,
-          "replyingTo": "juliusamo",
-          "user": {
-            "image": {
-              "png": "./images/avatars/image-juliusomo.png",
-              "webp": "./images/avatars/image-juliusomo.webp"
-            },
-            "username": "juliusamo"
-          }
-        }
-      ]
+      "replies": []
     }
   ]
 }

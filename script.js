@@ -79,6 +79,9 @@ function replyToReply() {
 
       const parentReplyDiv = button.closest(".reply");
       const replyDiv = document.createElement("div");
+      const userToReply = button
+        .closest(".content")
+        .querySelector(".profil-name").innerText;
       const replyId = parentReplyDiv.getAttribute("data-id"); // obtenir l'ID de la réponse
       button.classList.add("clicked");
       replyDiv.innerHTML = `<div class="reply">
@@ -86,10 +89,12 @@ function replyToReply() {
         <img src="./images/avatars/image-juliusomo.png" alt="" />
         <textarea
           class="comment-text"
+          name="content"
           rows="4"
           placeholder="Add a comment..."
-        >@taggedUser ${replyId}</textarea>
+        >@${userToReply} ${replyId}</textarea>
         <input type="hidden" name="replyId" value="${replyId}"/>
+        <input type="hidden" name="replyingTo" value="${userToReply}" />
         <button id="submitButton" class="sendButton">REPLY</button>
       </form>
     </div>
