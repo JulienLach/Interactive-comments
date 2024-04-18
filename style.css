@@ -110,7 +110,8 @@ img {
 .delete-btn,
 .delete-post-btn,
 .delete-reply-to-reply-btn,
-.edit-btn {
+.edit-btn,
+.edit-reply-btn {
   height: fit-content;
   border: none;
   background-color: transparent;
@@ -131,7 +132,8 @@ img {
 .delete-btn:hover,
 .delete-post-btn:hover,
 .delete-reply-to-reply-btn:hover,
-.edit-btn:hover {
+.edit-btn:hover,
+.edit-reply-btn:hover {
   background-color: #ffcbbb;
 }
 

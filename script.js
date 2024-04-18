@@ -106,10 +106,12 @@ function replyToReply() {
 
 // EDIT FUNCTION //
 function editReply() {
-  const editButtons = document.querySelectorAll(".edit-btn");
+  const editButtons = document.querySelectorAll(".edit-reply-btn");
 
   editButtons.forEach((button) => {
     button.addEventListener("click", () => {
+      const replyId = button.closest(".reply").getAttribute("data-id");
+      const replyContent = button.getAttribute("data-content");
       // empêcher de cliquer à nouveau sur le bouton reply
       if (button.classList.contains("clicked")) {
         button.disabled = true;
@@ -120,14 +122,16 @@ function editReply() {
       button.classList.add("clicked");
 
       replyDiv.innerHTML = `<div class="reply">
-      <form action="index.html">
+      <form action="/api/editReply" method="POST">
         <img src="./images/avatars/image-juliusomo.png" alt="" />
         <textarea
           class="comment-text"
+          name="content"
           rows="4"
           placeholder="Add a comment..."
-        >@taggedUser Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.</textarea>
+        >${replyContent}</textarea>
         <button id="submitButton" class="sendButton">UPDATE</button>
+        <input type="hidden" name="replyId" value="${replyId}"/>      
       </form>
     </div>
   </div>`;
@@ -402,7 +406,7 @@ function fetchData() {
                 <button class="delete-btn" data-id="${reply.id}">
                   <i class="fa-solid fa-trash"></i>Delete
                 </button>
-                <button class="edit-btn">
+                <button class="edit-reply-btn" data-content="${reply.content}" data-id="${reply.id}">
                   <i class="fas fa-edit"></i>Edit
                 </button>
               </div>

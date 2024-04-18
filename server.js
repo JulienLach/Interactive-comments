@@ -208,6 +208,27 @@ app.post("/api/deleteReplyToReply", (req, res) => {
 });
 
 // Route pour traiter le update d'une reply à un commentaire
-app.post("/api/updateReply", (req, res) => {
-  res.send("Réponse mise à jour");
+app.post("/api/editReply", (req, res) => {
+  // res.send("Réponse mise à jour");
+  const replyContent = req.body.content;
+  const replyId = req.body.replyId;
+  try {
+    let data = fs.readFileSync("./data.json");
+    let jsonData = JSON.parse(data);
+    jsonData.comments.forEach((comment) => {
+      comment.replies.forEach((reply) => {
+        if (reply.id === replyId) {
+          reply.content = replyContent;
+          fs.writeFileSync("./data.json", JSON.stringify(jsonData, null, 2));
+          res.redirect("http://localhost:3000/index.html");
+          console.log("Réponse mise à jour avec succès");
+        }
+      });
+    });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .send("Erreur lors de la lecture ou de l'écriture du fichier");
+  }
 });
