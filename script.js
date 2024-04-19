@@ -54,7 +54,7 @@ function replyToPost() {
           class="comment-text"
           rows="4"
           placeholder="Add a comment..."
-        >@${userToReply} ${commentId}</textarea>
+        ></textarea>
         <input type="hidden" name="replyingTo" value="${userToReply}" />
         <input type="hidden" name="commentId" value="${commentId}" />
         <button id="submitButton" class="sendButton">REPLY</button>
@@ -92,7 +92,7 @@ function replyToReply() {
           name="content"
           rows="4"
           placeholder="Add a comment..."
-        >@${userToReply} ${replyId}</textarea>
+        ></textarea>
         <input type="hidden" name="replyId" value="${replyId}"/>
         <input type="hidden" name="replyingTo" value="${userToReply}" />
         <button id="submitButton" class="sendButton">REPLY</button>
@@ -493,7 +493,7 @@ function fetchData() {
                     </div>
                     <div class="content-body">
                       <div class="message">
-                        <p>${replyToReply.content}</p>
+                        <p><span class="tagged-replied-user">@${replyToReply.replyingTo}</span> ${replyToReply.content}</p>
                       </div>
                     </div>
                   </div>
@@ -522,7 +522,7 @@ function fetchData() {
                     </div>
                     <div class="content-body">
                       <div class="message">
-                        <p>${replyToReply.content}</p>
+                        <p><span class="tagged-replied-user">@${replyToReply.replyingTo}</span> ${replyToReply.content}</p>
                       </div>
                     </div>
                   </div>
